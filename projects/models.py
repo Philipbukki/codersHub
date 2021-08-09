@@ -10,6 +10,7 @@ class Project(models.Model):
     demo_link = models.CharField(max_length=200, null=True, blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     tatal_votes = models.IntegerField(default=0, null=True, blank=True)
+    vote_ratio = models.IntegerField(default=0, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           editable=False, primary_key=True)
@@ -22,7 +23,7 @@ class Review(models.Model):
     VOTE_TYPE = (
 
         ('up', 'Up Vote'),
-        ('Dowwn', 'Down Vote'),
+        ('Down', 'Down Vote'),
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField(blank=True, null=True)
