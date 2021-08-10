@@ -6,10 +6,12 @@ class Project(models.Model):
 
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
+    featured_image = models.ImageField(
+        blank=True, null=True, default="default.jpg")
     source_link = models.CharField(max_length=200, null=True, blank=True)
     demo_link = models.CharField(max_length=200, null=True, blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
-    tatal_votes = models.IntegerField(default=0, null=True, blank=True)
+    total_votes = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
