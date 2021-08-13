@@ -44,7 +44,7 @@
                                     Feedback ({{project.total_votes}}) Vote{{project.total_votes|pluralize:"s"}}
                                 </p>
                                 <div class="project__tags">
-                                    {% for tag in tags%}
+                                    {% for tag in project.tags.all%}
                                     <span class="tag tag--pill tag--main">
                                         <small>{{tag}}</small>
                                     </span>
@@ -59,9 +59,7 @@
 
             </div>
         </div>
-    </section>
-
-    
+    </section> 
 
 </main>
 

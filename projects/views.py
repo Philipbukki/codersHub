@@ -1,16 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
+from .utils import searchProjects
 from django.shortcuts import render, redirect
 from. models import Project, Tag
 
 
 @login_required(login_url="login")
 def projects(request):
-    projects = Project.objects.all()
-    tags = Tag.objects.all()
+    projects, search_query = searchProjects(request)
     context = {
         'projects': projects,
-        'tags': tags
+        'search_query': search_query,
     }
     return render(request, 'projects/projects_list.html', context)
 

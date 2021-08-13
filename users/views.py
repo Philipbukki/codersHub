@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile, Skill
+from .utils import searchProfiles
 
 
 def registerUser(request):
@@ -20,7 +21,7 @@ def registerUser(request):
             login(request, user)
             return redirect('profile')
         else:
-            messages.success(request, "Opps! an error occurred during sign Up")
+            messages.error(request, "Opps! an error occurred during sign Up")
 
     context = {
         'form': form,
@@ -55,10 +56,10 @@ def logoutUser(request):
 
 
 def profile(request):
-
-    profiles = Profile.objects.all()
+    profiles, search_query = searchProfiles(request)
     context = {
         'profiles': profiles,
+        'search_query': search_query,
     }
     return render(request, 'users/profiles.html', context)
 
