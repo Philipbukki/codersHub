@@ -40,6 +40,9 @@ class Review(models.Model):
     def __str__(self):
         return self.value
 
+    class Meta:
+        ordering = ['-date_created']
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)

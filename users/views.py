@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile, Skill
 from .utils import searchProfiles
@@ -57,8 +58,19 @@ def logoutUser(request):
 
 def profile(request):
     profiles, search_query = searchProfiles(request)
+    paginator = Paginator(profiles, 1)
+    page = request.GET.get('page')
+
+    try:
+        profiles = paginator.page(page)
+    except PageNotAnInteger:
+        profiles = paginator.page(1)
+    except EmptyPage:
+        profiles = paginator.page(paginator.num_pages)
+
     context = {
         'profiles': profiles,
+        'page': page,
         'search_query': search_query,
     }
     return render(request, 'users/profiles.html', context)
