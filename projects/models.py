@@ -30,6 +30,7 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('Down', 'Down Vote'),
     )
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField(blank=True, null=True)
     value = models.CharField(max_length=200, choices=VOTE_TYPE)
@@ -42,6 +43,7 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['-date_created']
+        unique_together = [['owner', 'project']]
 
 
 class Tag(models.Model):
